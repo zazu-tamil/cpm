@@ -1,0 +1,272 @@
+<!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="<?php echo base_url() ?>/asset/images/user.jpg" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p><?php echo $this->session->userdata('cr_name')  ;?></p>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+       
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu" data-widget="tree"> 
+        <li <?php if($this->uri->segment(1, 0) === 'dash') echo 'class="active"'; ?>><a href="<?php echo site_url('dash') ?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <?php if(($this->session->userdata('cr_is_admin') == 1) || ($this->session->userdata('cr_is_admin') == 2 )) { ?> 
+        <li class="treeview <?php if(in_array($this->uri->segment(1, 0),array('pattern-list','pattern-in-out-list'))) echo 'active'; ?>">
+          <a href="#">
+            <i class="fa fa-book"></i> <span>Pattern Shop</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <?php if(($this->session->userdata('cr_is_admin') == 1) ) { ?>
+            <li <?php if($this->uri->segment(1, 0) === 'pattern-list') echo 'class="active"'; ?>><a href="<?php echo site_url('pattern-list') ?>"><i class="fa fa-circle-o"></i> Pattern List</a></li>
+            <?php } ?>
+            <li <?php if($this->uri->segment(1, 0) === 'pattern-in-out-list-v2') echo 'class="active"'; ?>><a href="<?php echo site_url('pattern-in-out-list-v2') ?>"><i class="fa fa-circle-o"></i> Pattern In/Out List</a></li>
+            
+             
+          </ul>
+        </li> 
+        <?php } ?>
+        <?php if(($this->session->userdata('cr_is_admin') == 1) ) { ?>
+        <li class="treeview <?php if(in_array($this->uri->segment(1, 0),array('work-order-entry','work-order-list'))) echo 'active'; ?>">
+          <a href="#">
+            <i class="fa fa-book"></i> <span>Work Order</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li <?php if($this->uri->segment(1, 0) === 'work-order-entry') echo 'class="active"'; ?>><a href="<?php echo site_url('work-order-entry') ?>"><i class="fa fa-circle-o"></i> Work Order Entry</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'work-order-list') echo 'class="active"'; ?>><a href="<?php echo site_url('work-order-list') ?>"><i class="fa fa-circle-o"></i> Work Order List</a></li> 
+          </ul>
+        </li>
+        <?php } ?>
+        <?php if(($this->session->userdata('cr_is_admin') == 1) || ($this->session->userdata('cr_is_admin') == 2 )) { ?> 
+        <li class="treeview <?php if(in_array($this->uri->segment(1, 0),array('core-planning','core-floor-stock','core-production','core-item-list'))) echo 'active'; ?>">
+          <a href="#">
+            <i class="fa fa-book"></i> <span>Core Shop</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <?php if(($this->session->userdata('cr_is_admin') == 1) ) { ?>
+            <li <?php if($this->uri->segment(1, 0) === 'core-item-list') echo 'class="active"'; ?>><a href="<?php echo site_url('core-item-list') ?>"><i class="fa fa-circle-o"></i> Core Item List</a></li>
+            <?php } ?>
+            <!--<li <?php if($this->uri->segment(1, 0) === 'core-planning') echo 'class="active"'; ?>><a href="<?php echo site_url('core-planning') ?>"><i class="fa fa-circle-o"></i> Core Planning</a></li>-->
+            <li <?php if($this->uri->segment(1, 0) === 'core-production') echo 'class="active"'; ?>><a href="<?php echo site_url('core-production') ?>"><i class="fa fa-circle-o"></i> Core production</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'core-floor-stock') echo 'class="active"'; ?>><a href="<?php echo site_url('core-floor-stock') ?>"><i class="fa fa-circle-o"></i> Core Openning Stock</a></li>
+              
+          </ul>
+        </li>  
+        
+        <li class="treeview <?php if(in_array($this->uri->segment(1, 0),array('work-planning','work-planning-list'))) echo 'active'; ?>">
+          <a href="#">
+            <i class="fa fa-book"></i> <span>Planning</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li <?php if($this->uri->segment(1, 0) === 'work-planning') echo 'class="active"'; ?>><a href="<?php echo site_url('work-planning') ?>"><i class="fa fa-circle-o"></i> Daily Planning</a></li> 
+             <li <?php if($this->uri->segment(1, 0) === 'work-planning-list') echo 'class="active"'; ?>><a href="<?php echo site_url('work-planning-list') ?>"><i class="fa fa-circle-o"></i> Daily Planning List</a></li> 
+           </ul>
+        </li>  
+        <li class="treeview <?php if(in_array($this->uri->segment(1, 0),array('moulding-material','moulding-heatcode-log'))) echo 'active'; ?>">
+          <a href="#">
+            <i class="fa fa-book"></i> <span>Moulding Log</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li <?php if($this->uri->segment(1, 0) === 'moulding-material') echo 'class="active"'; ?>><a href="<?php echo site_url('moulding-material') ?>"><i class="fa fa-circle-o"></i>Material Consumed</a></li> 
+            <li <?php if($this->uri->segment(1, 0) === 'moulding-heatcode-log') echo 'class="active"'; ?>><a href="<?php echo site_url('moulding-heatcode-log') ?>"><i class="fa fa-circle-o"></i><strong>Moulding Log Sheet
+</strong></a></li> 
+           </ul>
+        </li> 
+        <?php } ?> 
+        
+        <?php if(($this->session->userdata('cr_is_admin') == 1) || ($this->session->userdata('cr_is_admin') == 3 )) { ?> 
+        <li class="treeview <?php if(in_array($this->uri->segment(1, 0),array('melting-log'))) echo 'active'; ?>">
+          <a href="#">
+            <i class="fa fa-book"></i> <span>Melting Log Sheet</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li <?php if($this->uri->segment(1, 0) === 'melting-log') echo 'class="active"'; ?>><a href="<?php echo site_url('melting-log') ?>"><i class="fa fa-circle-o"></i> Melting Log</a></li> 
+           </ul>
+        </li>
+        <?php } ?> 
+        <?php if(($this->session->userdata('cr_is_admin') == 1) ) { ?> 
+        <li class="treeview <?php if(in_array($this->uri->segment(1, 0),array('sand-test'))) echo 'active'; ?>">
+          <a href="#">
+            <i class="fa fa-book"></i> <span>LAB</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li <?php if($this->uri->segment(1, 0) === 'sand-test') echo 'class="active"'; ?>><a href="<?php echo site_url('sand-test') ?>"><i class="fa fa-circle-o"></i> Sand Test</a></li> 
+           </ul>
+        </li>
+        <li class="treeview <?php if(in_array($this->uri->segment(1, 0),array('quality-check'))) echo 'active'; ?>">
+          <a href="#">
+            <i class="fa fa-book"></i> <span>QC - Inspection</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li <?php if($this->uri->segment(1, 0) === 'quality-check') echo 'class="active"'; ?>><a href="<?php echo site_url('quality-check') ?>"><i class="fa fa-circle-o"></i> Quality Check</a></li> 
+           </ul>
+        </li>
+        <?php } ?> 
+        <?php if(($this->session->userdata('cr_is_admin') == 1) || ($this->session->userdata('cr_is_admin') == 4 )) { ?> 
+        <li class="treeview <?php if(in_array($this->uri->segment(1, 0),array('customer-despatch','sub-contractor-despatch','customer-despatch-edit','sub-contractor-despatch-edit'))) echo 'active'; ?>">
+          <a href="#">
+            <i class="fa fa-book"></i> <span>Despatch [ DC ]</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li <?php if($this->uri->segment(1, 0) === 'customer-despatch') echo 'class="active"'; ?>><a href="<?php echo site_url('customer-despatch') ?>"><i class="fa fa-circle-o"></i> Customer DC</a></li> 
+            <li <?php if($this->uri->segment(1, 0) === 'sub-contractor-despatch') echo 'class="active"'; ?>><a href="<?php echo site_url('sub-contractor-despatch') ?>"><i class="fa fa-circle-o"></i> Sub-Contractor DC</a></li> 
+           </ul>
+        </li>
+        <?php } ?> 
+        <li class="header">Reports</li>
+        <li class="treeview <?php if(in_array($this->uri->segment(1, 0),array('mis-report','pattern-history-report','heatcode-wise-production-report','work-order-planning-statement', 'work-order-wise-despatch-report','day-production-report','core-stock-reports','production-note','production-summary-report','date-wise-production-report','core-maker-reports','date-wise-planning-report','date-wise-rejection-report','customer-wise-planning-report','customer-wise-production-report','date-wise-melting-report','customer-wise-melting-report','customer-wise-rejection-report','moulding-consumption-report','melting-consumption-report','customer-wise-despatch-report','customer-wise-despatch-summary','grinding-report','rejection-summary-report','work-order-wise-despatch-summary'))) echo 'active'; ?>">
+          <a href="#">
+            <i class="fa fa-print"></i> <span>Reports</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>  
+          </a>
+          <ul class="treeview-menu"> 
+           
+            <li <?php if($this->uri->segment(1, 0) === 'mis-report') echo 'class="active"'; ?>><a href="<?php echo site_url('mis-report') ?>"><i class="fa fa-circle-o"></i> MIS Report</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'day-production-report') echo 'class="active"'; ?>><a href="<?php echo site_url('day-production-report') ?>"><i class="fa fa-circle-o"></i> Day Production</a></li>
+            <!--<li <?php if($this->uri->segment(1, 0) === 'production-summary-report') echo 'class="active"'; ?>><a href="<?php echo site_url('production-summary-report') ?>"><i class="fa fa-circle-o"></i> Date Wise Summary</a></li>-->
+            <li <?php if($this->uri->segment(1, 0) === 'production-note') echo 'class="active"'; ?>><a href="<?php echo site_url('production-note') ?>"><i class="fa fa-circle-o"></i> Production Report</a></li>
+            
+            <li <?php if($this->uri->segment(1, 0) === 'pattern-history-report') echo 'class="active"'; ?>><a href="<?php echo site_url('pattern-history-report') ?>"><i class="fa fa-circle-o"></i>Pattern History</a></li>
+            <hr />
+            <?php if(($this->session->userdata('cr_is_admin') == 1) || ($this->session->userdata('cr_is_admin') == 2) || ($this->session->userdata('cr_is_admin') == 4 )) { ?>  
+            <li <?php if($this->uri->segment(1, 0) === 'work-order-planning-statement') echo 'class="active"'; ?>><a href="<?php echo site_url('work-order-planning-statement') ?>"><i class="fa fa-circle-o"></i> PO Planning Statement</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'date-wise-planning-report') echo 'class="active"'; ?>><a href="<?php echo site_url('date-wise-planning-report') ?>"><i class="fa fa-circle-o"></i> Cumulative Planning</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'customer-wise-planning-report') echo 'class="active"'; ?>><a href="<?php echo site_url('customer-wise-planning-report') ?>"><i class="fa fa-circle-o"></i> Customer Wise Planning</a></li>
+            <?php } ?>    
+            <hr />      
+             <?php if($this->session->userdata('cr_is_admin') != 3 && $this->session->userdata('cr_is_admin') != 4 ) { ?>        
+            <li <?php if($this->uri->segment(1, 0) === 'date-wise-production-report') echo 'class="active"'; ?>><a href="<?php echo site_url('date-wise-production-report') ?>"><i class="fa fa-circle-o"></i> Cumulative Moulding</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'customer-wise-production-report') echo 'class="active"'; ?>><a href="<?php echo site_url('customer-wise-production-report') ?>"><i class="fa fa-circle-o"></i> Customer Wise Moulding</a></li>
+            <hr />  
+             <?php } ?>  
+             <?php if($this->session->userdata('cr_is_admin') != 2 && $this->session->userdata('cr_is_admin') != 4 ) { ?>
+            <li <?php if($this->uri->segment(1, 0) === 'date-wise-melting-report') echo 'class="active"'; ?>><a href="<?php echo site_url('date-wise-melting-report') ?>"><i class="fa fa-circle-o"></i> Cumulative Melting</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'customer-wise-melting-report') echo 'class="active"'; ?>><a href="<?php echo site_url('customer-wise-melting-report') ?>"><i class="fa fa-circle-o"></i> Customer Wise Melting</a></li> 
+            <hr />
+            <?php } ?>
+            <?php if($this->session->userdata('cr_is_admin') != 4 ) { ?>  
+             <li <?php if($this->uri->segment(1, 0) === 'heatcode-wise-production-report') echo 'class="active"'; ?>><a href="<?php echo site_url('heatcode-wise-production-report') ?>"><i class="fa fa-circle-o"></i>HC Wise Prod & Rejection</a></li>                  
+             <li <?php if($this->uri->segment(1, 0) === 'date-wise-rejection-report') echo 'class="active"'; ?>><a href="<?php echo site_url('date-wise-rejection-report') ?>"><i class="fa fa-circle-o"></i> Date Wise Rejection</a></li>
+             <li <?php if($this->uri->segment(1, 0) === 'rejection-summary-report') echo 'class="active"'; ?>><a href="<?php echo site_url('rejection-summary-report') ?>"><i class="fa fa-circle-o"></i> Rejection Type Wise Summary</a></li>
+             <li <?php if($this->uri->segment(1, 0) === 'customer-wise-rejection-report') echo 'class="active"'; ?>><a href="<?php echo site_url('customer-wise-rejection-report') ?>"><i class="fa fa-circle-o"></i> Customer Wise Rejection</a></li>
+            <hr />
+            <?php } ?> 
+            <?php if($this->session->userdata('cr_is_admin') != 3  && $this->session->userdata('cr_is_admin') != 2 ) { ?> 
+            <li <?php if($this->uri->segment(1, 0) === 'customer-wise-despatch-report') echo 'class="active"'; ?>><a href="<?php echo site_url('customer-wise-despatch-report') ?>"><i class="fa fa-circle-o"></i> Customer Wise Despatch</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'customer-wise-despatch-summary') echo 'class="active"'; ?>><a href="<?php echo site_url('customer-wise-despatch-summary') ?>"><i class="fa fa-circle-o"></i> Despatch Summary</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'work-order-wise-despatch-report') echo 'class="active"'; ?>><a href="<?php echo site_url('work-order-wise-despatch-report') ?>"><i class="fa fa-circle-o"></i> Work Order Wise Despatch</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'work-order-wise-despatch-summary') echo 'class="active"'; ?>><a href="<?php echo site_url('work-order-wise-despatch-summary') ?>"><i class="fa fa-circle-o"></i> PO Based Despatch Summary</a></li>
+           <hr /> 
+           <?php } ?> 
+           <?php if($this->session->userdata('cr_is_admin') != 2  ) { ?>
+            <li <?php if($this->uri->segment(1, 0) === 'grinding-report') echo 'class="active"'; ?>><a href="<?php echo site_url('grinding-report') ?>"><i class="fa fa-circle-o"></i> Grinding Reports</a></li>
+            <?php } ?>
+            <?php if($this->session->userdata('cr_is_admin') != 3 && $this->session->userdata('cr_is_admin') != 4 ) { ?>
+            <li <?php if($this->uri->segment(1, 0) === 'core-maker-reports') echo 'class="active"'; ?>><a href="<?php echo site_url('core-maker-reports') ?>"><i class="fa fa-circle-o"></i> Core Maker Reports</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'core-stock-reports') echo 'class="active"'; ?>><a href="<?php echo site_url('core-stock-reports') ?>"><i class="fa fa-circle-o"></i> Core Stock Reports</a></li>
+            <?php } ?>
+           <hr />
+           
+           <li class="text-fuchsia">Material Consumption</li>
+           <?php if($this->session->userdata('cr_is_admin') != 3 && $this->session->userdata('cr_is_admin') != 4) { ?>
+           <li <?php if($this->uri->segment(1, 0) === 'moulding-consumption-report') echo 'class="active"'; ?>><a href="<?php echo site_url('moulding-consumption-report') ?>"><i class="fa fa-circle-o"></i> Moulding Consumption</a></li> 
+           <?php } ?>
+           <?php if($this->session->userdata('cr_is_admin') != 2 && $this->session->userdata('cr_is_admin') != 4 ) { ?>
+           <li <?php if($this->uri->segment(1, 0) === 'melting-consumption-report') echo 'class="active"'; ?>><a href="<?php echo site_url('melting-consumption-report') ?>"><i class="fa fa-circle-o"></i> Melting Consumption</a></li> 
+            <?php } ?>  
+          </ul>
+        </li>
+        <?php if(($this->session->userdata('cr_is_admin') == 1) ) { ?>
+        <li class="header">Masters</li>
+        <li class="treeview <?php if(in_array($this->uri->segment(1, 0),array('core-maker-rate-list','customer-list','uom-list','grade-list','rejection-type-list','pattern-maker-list','core-maker-list','sub-contractor-list','employee-list', 'user-list'))) echo 'active'; ?>">
+          <a href="#">
+            <i class="fa fa-cubes"></i> <span>Master</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li <?php if($this->uri->segment(1, 0) === 'floor-stock') echo 'class="active"'; ?>><a href="<?php echo site_url('floor-stock') ?>"><i class="fa fa-circle-o"></i> Opening Floor Stock</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'sub-contractor-list') echo 'class="active"'; ?>><a href="<?php echo site_url('sub-contractor-list') ?>"><i class="fa fa-circle-o"></i> Sub-Contractor List</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'pattern-maker-list') echo 'class="active"'; ?>><a href="<?php echo site_url('pattern-maker-list') ?>"><i class="fa fa-circle-o"></i> Pattern Maker List</a></li>
+            
+            <li <?php if($this->uri->segment(1, 0) === 'core-maker-list') echo 'class="active"'; ?>><a href="<?php echo site_url('core-maker-list') ?>"><i class="fa fa-circle-o"></i> Core Maker List</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'core-maker-rate-list') echo 'class="active"'; ?>><a href="<?php echo site_url('core-maker-rate-list') ?>"><i class="fa fa-circle-o"></i> Core Maker Rate List</a></li>
+            <hr />
+            <li <?php if($this->uri->segment(1, 0) === 'customer-list') echo 'class="active"'; ?>><a href="<?php echo site_url('customer-list') ?>"><i class="fa fa-circle-o"></i> Customer List</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'uom-list') echo 'class="active"'; ?>><a href="<?php echo site_url('uom-list') ?>"><i class="fa fa-circle-o"></i> UOM List</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'grade-list') echo 'class="active"'; ?>><a href="<?php echo site_url('grade-list') ?>"><i class="fa fa-circle-o"></i> Grade List</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'rejection-type-list') echo 'class="active"'; ?>><a href="<?php echo site_url('rejection-type-list') ?>"><i class="fa fa-circle-o"></i> Rejection Type  List</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'employee-list') echo 'class="active"'; ?>><a href="<?php echo site_url('employee-list') ?>"><i class="fa fa-circle-o"></i> Employee List</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'user-list') echo 'class="active"'; ?>><a href="<?php echo site_url('user-list') ?>"><i class="fa fa-circle-o"></i> Login User List</a></li>
+              
+          </ul>
+        </li>
+        <?php } ?>
+        <li class="header">Masters Specification</li> 
+        <li class="treeview <?php if(in_array($this->uri->segment(1, 0),array('grinding-master-rate-list','core-maker-master-rate','customer-wise-pattern-report','moulding-spec-generate','melting-master-list-v1'))) echo 'active'; ?>">
+          <a href="#">
+            <i class="fa fa-cubes"></i> <span>Master Specification</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <?php if($this->session->userdata('cr_is_admin') != 3 && $this->session->userdata('cr_is_admin') != 2 && $this->session->userdata('cr_is_admin') != 4 ) { ?>
+            <li <?php if($this->uri->segment(1, 0) === 'core-maker-master-rate') echo 'class="active"'; ?>><a href="<?php echo site_url('core-maker-master-rate') ?>"><i class="fa fa-circle-o"></i> Core Maker Master Rate</a></li>
+            <?php } ?>
+            <?php if($this->session->userdata('cr_is_admin') != 3 && $this->session->userdata('cr_is_admin') != 2  ) { ?>
+            <li <?php if($this->uri->segment(1, 0) === 'grinding-master-rate-list') echo 'class="active"'; ?>><a href="<?php echo site_url('grinding-master-rate-list') ?>"><i class="fa fa-circle-o"></i> Grinding Master Rate</a></li>
+            <?php } ?>
+            <?php if($this->session->userdata('cr_is_admin') != 2 && $this->session->userdata('cr_is_admin') != 4 ) { ?>
+            <li <?php if($this->uri->segment(1, 0) === 'customer-wise-pattern-report') echo 'class="active"'; ?>><a href="<?php echo site_url('customer-wise-pattern-report') ?>"><i class="fa fa-circle-o"></i> Master Pattern List</a></li>
+            <li <?php if($this->uri->segment(1, 0) === 'melting-master-list-v1') echo 'class="active"'; ?>><a href="<?php echo site_url('melting-master-list-v1') ?>"><i class="fa fa-circle-o"></i> Melting Master List</a></li>
+            <?php } ?>
+            <?php if($this->session->userdata('cr_is_admin') != 3 && $this->session->userdata('cr_is_admin') != 4 ) { ?>
+            <!--<li <?php if($this->uri->segment(1, 0) === 'moulding-spec-generate') echo 'class="active"'; ?>><a href="<?php echo site_url('moulding-spec-generate') ?>"><i class="fa fa-circle-o"></i> Moulding Spec Generate</a></li>-->
+            <?php } ?>
+          </ul>
+        </li>
+        
+        <li><a href="<?php echo site_url('logout') ?>"><i class="fa fa-circle-o"></i> Logout</a></li> 
+         
+         
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+  

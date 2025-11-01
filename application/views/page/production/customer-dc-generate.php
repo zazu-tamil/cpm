@@ -1,0 +1,218 @@
+<?php  include_once(VIEWPATH . '/inc/header.php'); 
+/*echo "<pre>";
+print_r($_POST);
+echo "</pre>";*/   
+?>
+ <section class="content-header">
+  <h1>Generate Customer Despatch </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-cubes"></i> Despatch </a></li> 
+    <li class="active">Generate Customer DC</li>
+  </ol>
+</section>
+<!-- Main content -->
+<section class="content"> 
+    <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title"><i class="fa fa-search"></i> Search</h3>
+        </div>
+       <div class="box-body"> 
+            <form action="<?php echo site_url('customer-despatch-v2'); ?>" method="post" id="frm">
+            <div class="row"> 
+                
+                <!--<div class="col-md-5">
+                     <label>Item</label>
+                      <div class="input-group">
+                        <?php echo form_dropdown('srch_pattern_id',array('' => 'Select Item') + $pattern_opt ,set_value('srch_pattern_id') ,' id="srch_pattern_id" class="form-control" ');?>
+                      </div> 
+                </div> -->
+                <div class="form-group col-md-3"> 
+                    <label>From Date</label>
+                    <div class="input-group date">
+                      <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                      <input type="text" class="form-control pull-right datepicker" id="srch_from_date" name="srch_from_date" value="<?php echo set_value('srch_from_date',$srch_from_date);?>" required>
+                    </div>
+                    <!-- /.input group -->                                             
+                 </div> 
+                 <div class="form-group col-md-3"> 
+                    <label>To Date</label>
+                    <div class="input-group date">
+                      <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                      <input type="text" class="form-control pull-right datepicker" id="srch_to_date" name="srch_to_date" value="<?php echo set_value('srch_to_date',$srch_to_date);?>" required>
+                    </div>
+                    <!-- /.input group -->                                             
+                 </div>
+                 <div class="col-md-6">
+                     <label>Customer</label> 
+                        <?php echo form_dropdown('srch_customer_id',array('' => 'Select Customer') + $customer_opt  ,set_value('srch_customer_id',$srch_customer_id) ,' id="srch_customer_id" class="form-control" ');?>
+                       
+                </div> 
+                <div class="col-md-3"> 
+                <br />
+                    <button class="btn btn-info" type="submit">Show Records</button>
+                </div>
+				 <div class="col-md-3"> 
+                <br />
+                    <a class="btn btn-warning" href="<?php echo site_url('customer-despatch'); ?>" >Back to Customer DC List</a>    
+					
+					
+                </div>
+            </div>
+            </form> 
+       </div> 
+    </div> 
+    <div class="box box-success">
+        <div class="box-header with-border">
+          <h3 class="box-title"><i class="fa fa-book"></i> Items</h3>
+        </div>
+       <div class="box-body"> 
+         <?php  if(!empty($record_list)) { ?>  
+                 <form action="<?php echo site_url('customer-despatch-v2'); ?>" method="post" id="frm-despatch">
+                  <?php $k =0; foreach($record_list as $item=> $info){?> 
+                  <div class="box box-default box-solid collapsed-box">
+                    <div class="box-header with-border">
+                      <h3 class="box-title"><?php echo $item;?></h3>
+        
+                      <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                        </button>
+                      </div>
+                      <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body" style="">
+                        <table class="table table-bordered table-condensed">
+                            <thead>
+                            <tr class="text-blue"> 
+                                <th>#</th> 
+                                <th>Melting Date</th> 
+                                <th>Heat Code</th> 
+                                <th>Customer PO</th>  
+                                <th class="text-center">Stock Qty</th> 
+                                <th colspan="2">Selection</th>
+                            </tr> `
+                            </thead>
+                            <tbody>
+                      <?php $tot = 0;  foreach($info as $j=> $ls){ $tot+= $ls['bal_qty'];  $k++;  ?>
+                            <tr>
+                                <td class="text-center"><?php echo ($j + 1);?></td>   
+                                 <td><?php echo date('d-m-Y', strtotime($ls['melting_date']));?></td>   
+                                <td><?php echo $ls['heat_code'] . $ls['days_heat_no']?></td>  
+                                <td><?php echo $ls['customer_PO_No'];?></td>  
+                                <td class="text-right"><?php echo $ls['bal_qty'];?></td> 
+                                <td class="text-center">
+                                    <input type="checkbox" class="work_planning_id" name="work_planning_id[]" value="<?php echo $ls['work_planning_id'];?>" data-qty="<?php echo $ls['bal_qty'];?>" data-cnt="<?php echo $k;?>" />
+                                </td>
+                                <td class="text-right">
+                                    <input type="number" class="form-control text-right qty_<?php echo ($k);?>" name="qty[]" value="0" style="width: 100px;" readonly="true" disabled="true"  />
+                                    <input type="hidden" class="form-control work_order_id_<?php echo ($k);?>" name="work_order_id[]" value="<?php echo $ls['work_order_id'];?>" disabled="true" />
+                                    <input type="hidden" class="form-control pattern_id_<?php echo ($k);?>" name="pattern_id[]" value="<?php echo $ls['pattern_id'];?>" disabled="true" />
+                                    <input type="hidden" class="form-control melting_heat_log_id_<?php echo ($k);?>" name="melting_heat_log_id[]" value="<?php echo $ls['melting_heat_log_id'];?>" disabled="true"  />
+                                    <input type="hidden" class="form-control heat_code_<?php echo ($k);?>" name="heat_code[]" value="<?php echo $ls['heat_code'];?>" disabled="true"  />
+                                    <input type="hidden" class="form-control customer_PO_No_<?php echo ($k);?>" name="customer_PO_No[]" value="<?php echo $ls['customer_PO_No'];?>" disabled="true"  />
+                                </td>
+                            </tr>
+                      <?php   } ?>
+                      </tbody>
+                      <tr>
+                            <td colspan="4"></td>
+                            <td class="text-right"><?php echo $tot;?></td>
+                            <td></td>
+                            <td></td>
+                            
+                        </tr>  
+                      </table>  
+                    </div>
+                    <!-- /.box-body -->
+                  </div>
+                  <?php  } ?>
+                  <div class="box box-info">
+                        <div class="box-header with-border">
+                          <h3 class="box-title"><i class="fa fa-book"></i> DC Info</h3>
+                        </div>
+                       <div class="box-body"> 
+                            <div class="row">  
+                             <div class="form-group col-md-2">
+                                <label>DC No</label>
+                                <?php echo form_input('dc_no',set_value('dc_no' , $dc_no),'id="dc_no" class="form-control" placeholder="DC No" readonly ') ?>  
+                                <input type="hidden" name="mode" value="DC Generate" />                
+                             </div>  
+                             <div class="form-group col-md-2"> 
+                                <label for="despatch_date">DC Date</label>
+                                <div class="input-group date">
+                                  <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                  </div>
+                                  <input type="text" class="form-control pull-right datepicker" id="despatch_date" name="despatch_date" value="<?php echo date('Y-m-d');?>">
+                                </div>
+                                <!-- /.input group -->                                             
+                             </div>
+                             <div class="form-group col-md-4">
+                                <label for="customer_id">Customer</label>
+                                <?php echo form_dropdown('customer_id',array('' => 'Select Customer') + $customer_opt,set_value('customer_id' , $srch_customer_id) ,' id="customer_id" class="form-control" required');?> 
+                             </div>   
+                             <div class="form-group col-md-4">
+                                <label>Invoice No</label>
+                                <input class="form-control" type="text" name="invoice_no" id="invoice_no" value="0" placeholder="Invoice No"> 
+                             </div> 
+                         </div>
+                         <div class="row">  
+                            <div class="form-group col-md-4">
+                                <label>Vehicle No</label>
+                                <input class="form-control" type="text" name="vehicle_no" id="vehicle_no" value="" placeholder="Vehicle No">                                             
+                             </div>
+                            <div class="form-group col-md-4">
+                                <label>Driver Name</label>
+                                <input class="form-control" type="text" name="driver_name" id="driver_name" value="" placeholder="Driver Name">                                             
+                             </div> 
+                             <div class="form-group col-md-4">
+                                <label>Mobile</label>
+                                <input class="form-control" type="text" name="mobile" id="mobile" value="" placeholder="Mobile">                                             
+                             </div>
+                         </div> 
+                          <div class="row">
+                            <div class="form-group col-md-6"> 
+                                <label>Sub-Contractor Machining</label>
+                                <?php echo form_dropdown('machining_sub_contractor_id',array('' => 'Select Sub-Contractor')+ $sub_contractor_opt ,set_value('machining_sub_contractor_id') ,' id="machining_sub_contractor_id" class="form-control"');?>
+                           </div>
+                           <div class="form-group col-md-6"> 
+                                <label>Sub-Contractor Grinding</label>
+                                <?php echo form_dropdown('grinding_sub_contractor_id',array('' => 'Select Sub-Contractor')+ $g_sub_contractor_opt ,set_value('grinding_sub_contractor_id') ,' id="grinding_sub_contractor_id" class="form-control" ');?>
+                           </div>
+                          </div>
+                          <div class="row"> 
+                              
+                              <div class="form-group col-md-9">
+                                <label>Remarks</label>
+                                <textarea class="form-control" name="remarks" placeholder="remarks" id="remarks"></textarea>                                             
+                             </div>
+                             <div class="form-group col-md-3">
+                                <label>Status</label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="status"  value="Active" checked="true" /> Active 
+                                    </label> 
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                         <input type="radio" name="status"  value="Cancelled"  /> Cancelled
+                                    </label>
+                                </div> 
+                             </div> 
+                         </div> 
+                       </div>
+                       <div class="box-footer text-right">
+                        <button type="submit" class="btn btn-success" name="btn_despatch" id="btn_despatch">Save</button>
+                       </div>
+                   </div>
+              </form>     
+          <?php } ?>            
+       </div> 
+    </div> 
+</section>
+<!-- /.content -->
+<?php  include_once(VIEWPATH . 'inc/footer.php'); ?>
