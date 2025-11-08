@@ -1386,6 +1386,7 @@ class Production extends CI_Controller {
                         'supervisor' => $this->input->post('supervisor'), 
                         'ideal_hrs_from' => $this->input->post('ideal_hrs_from'), 
                         'ideal_hrs_to' => $this->input->post('ideal_hrs_to'), 
+                        'breakdown_remarks' => $this->input->post('breakdown_remarks'), 
                         'total_hrs' => $this->input->post('total_hrs'), 
                         'remarks' => $this->input->post('remarks'), 
                         'b_c' => $this->input->post('b_c'), 
@@ -1523,6 +1524,7 @@ class Production extends CI_Controller {
                         'ideal_hrs_from' => $this->input->post('ideal_hrs_from'), 
                         'ideal_hrs_to' => $this->input->post('ideal_hrs_to'), 
                         'total_hrs' => $this->input->post('total_hrs'), 
+                        'breakdown_remarks' => $this->input->post('breakdown_remarks'), 
                         'remarks' => $this->input->post('remarks'), 
                         'b_c' => $this->input->post('b_c'), 
                         'b_si' => $this->input->post('b_si'), 
@@ -1880,7 +1882,8 @@ class Production extends CI_Controller {
                 TIMEDIFF(a.furnace_off_time,a.furnace_on_time) as furnace_time,
                 TIMEDIFF(a.pouring_finish_time,a.pouring_start_time) as pouring_time, 
                 (a.end_units - a.start_units) as units, 
-                TIMEDIFF(a.ideal_hrs_to,a.ideal_hrs_from ) as ideal_hrs ,
+                TIMEDIFF(a.ideal_hrs_to,a.ideal_hrs_from ) as ideal_hrs1 ,
+                if(a.total_hrs == '' ,((TIME_TO_SEC(a.ideal_hrs_to) - TIME_TO_SEC(a.ideal_hrs_from)) / 3600), a.total_hrs) as ideal_hrs,
                 DATEDIFF(current_date(), a.melting_date) as days  
                 from melting_heat_log_info as a 
                 where a.`status` = 'Active'  

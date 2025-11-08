@@ -81,6 +81,10 @@ echo "</pre>";*/
                         $cum['units'] += $info['units'];
 						//if(isset($tot_liq_metal[$info['mid']]))
                           $tot_liq = array_sum($tot_liq_metal[$info['mid']]);  
+
+                        $time = $info['ideal_hrs']; // e.g. "02:30:00"
+                        list($h, $m, $s) = explode(':', $time);
+                        $total_seconds += ($h * 3600) + ($m * 60) + $s;
                         //else {
                         //  $tot_liq = 0;  
                         //  echo "<h1>Chemical Composition Missing </h1>";
@@ -407,16 +411,22 @@ echo "</pre>";*/
                         </div>     
                         </div>   
                         </div>   
-                    <?php } ?>
+                    <?php } ?>                                    
+                    <?php 
+                    $total_hours = floor($total_seconds / 3600);
+                    $total_minutes = floor(($total_seconds % 3600) / 60);
+                    $total_seconds = $total_seconds % 60;
+                    ?>
                  <?php } ?>
             </div>
              <div class="box-footer">
                 <div class="row">
-                    <div class="col-md-3">Cumulative Units : <strong><?php echo $cum['units']?></strong></div>
+                    <div class="col-md-2">Cumulative Units : <strong><?php echo $cum['units']?></strong></div>
                     <div class="col-md-2">Liq.Metal : <strong><?php echo number_format($cum['liq'],3)?></strong></div>
-                    <div class="col-md-3">P.Casting Wt : <strong><?php echo number_format($cum['poured_casting_wt'],3)?></strong></div>
+                    <div class="col-md-2">P.Casting Wt : <strong><?php echo number_format($cum['poured_casting_wt'],3)?></strong></div>
                     <div class="col-md-2">FR Wt : <strong><?php echo number_format(($cum['liq'] - $cum['poured_casting_wt']),3);?></strong></div>
                     <div class="col-md-2">Units/ton :<strong> <?php echo number_format(( (($cum['units'] / $cum['liq']) * 1000)),3);?></strong></div>
+                    <div class="col-md-2">Total Breakdown Hrs :<strong> <?php echo sprintf("Total Ideal Hours: %02d:%02d:%02d", $total_hours, $total_minutes, $total_seconds); ?></strong></div>
                 </div>
              </div>
             </div> 

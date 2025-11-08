@@ -4288,7 +4288,12 @@ class Reports extends CI_Controller {
             TIMEDIFF(a.furnace_off_time,a.furnace_on_time) as furnace_time,
             TIMEDIFF(a.pouring_finish_time,a.pouring_start_time) as pouring_time,
             (a.end_units - a.start_units) as units, 
-            TIMEDIFF(a.ideal_hrs_to,a.ideal_hrs_from ) as ideal_hrs ,
+            TIMEDIFF(a.ideal_hrs_to,a.ideal_hrs_from ) as ideal_hrs1 , 
+             IF(
+                    a.total_hrs = '' OR a.total_hrs IS NULL,
+                    ROUND((TIME_TO_SEC(a.ideal_hrs_to) - TIME_TO_SEC(a.ideal_hrs_from)) / 3600, 2),
+                    a.total_hrs
+                ) AS ideal_hrs,
             f.*
             from melting_heat_log_info as a 
             left join melting_item_info as b on b.melting_heat_log_id = a.melting_heat_log_id

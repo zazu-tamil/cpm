@@ -135,30 +135,41 @@
                              </div>
                          </div> 
                          <div class="row">   
-                             <div class="form-group col-md-2">
+                             <div class="form-group col-md-3">
                                 <label>Furnace On Time</label>
                                 <input class="form-control" type="time" name="furnace_on_time" id="furnace_on_time" value="" required="true" >                                             
                              </div>
-                             <div class="form-group col-md-2">
+                             <div class="form-group col-md-3">
                                 <label>Furnace Off Time</label>
                                 <input class="form-control" type="time" name="furnace_off_time" id="furnace_off_time" value="">                                             
                              </div>
-                             <div class="form-group col-md-2">
+                             <div class="form-group col-md-3">
                                 <label>Pouring Start Time</label>
                                 <input class="form-control" type="time" name="pouring_start_time" id="pouring_start_time" value="" required="true" >                                             
                              </div>
-                             <div class="form-group col-md-2">
+                             <div class="form-group col-md-3">
                                 <label>Finish Time</label>
                                 <input class="form-control" type="time" name="pouring_finish_time" id="pouring_finish_time" value="">                                             
-                             </div>
-                             <div class="form-group col-md-2">
-                                <label>Ideal Hrs From</label>
+                             </div> 
+                         </div>
+                         <div class="row">   
+                              
+                             <div class="form-group col-md-3">
+                                <label>Breakdown Time From</label>
                                 <input class="form-control" type="time" name="ideal_hrs_from" id="ideal_hrs_from" value="">                                             
                              </div>
-                             <div class="form-group col-md-2">
-                                <label>Ideal Hrs To	</label>
+                             <div class="form-group col-md-3">
+                                <label>Breakdown Time To	</label>
                                 <input class="form-control" type="time" name="ideal_hrs_to" id="ideal_hrs_to" value="">                                             
-                             </div>  
+                             </div> 
+                             <div class="form-group col-md-2">
+                                <label>Breakdown Hrs</label>
+                                <input class="form-control" type="text" name="total_hrs" id="total_hrs" value="" readonly="true">                                             
+                             </div> 
+                              <div class="form-group col-md-4">
+                                <label>Breakdown Reason</label>
+                                <textarea class="form-control" name="breakdown_remarks" id="breakdown_remarks" placeholder="Breakdown Reason"></textarea>                                          
+                             </div> 
                          </div>
                          <div class="row">
                              <div class="form-group col-md-2">
@@ -489,30 +500,41 @@
                              </div>
                          </div> 
                          <div class="row">   
-                             <div class="form-group col-md-2">
+                             <div class="form-group col-md-3">
                                 <label>Furnace On Time</label>
                                 <input class="form-control" type="time" name="furnace_on_time" id="furnace_on_time" value="" required="true" >                                             
                              </div>
-                             <div class="form-group col-md-2">
+                             <div class="form-group col-md-3">
                                 <label>Furnace Off Time</label>
                                 <input class="form-control" type="time" name="furnace_off_time" id="furnace_off_time" value="">                                             
                              </div>
-                             <div class="form-group col-md-2">
+                             <div class="form-group col-md-3">
                                 <label>Pouring Start Time</label>
                                 <input class="form-control" type="time" name="pouring_start_time" id="pouring_start_time" value="" required="true" >                                             
                              </div>
-                             <div class="form-group col-md-2">
+                             <div class="form-group col-md-3">
                                 <label>Finish Time</label>
                                 <input class="form-control" type="time" name="pouring_finish_time" id="pouring_finish_time" value="">                                             
-                             </div>
-                             <div class="form-group col-md-2">
-                                <label>Ideal Hrs From</label>
+                             </div> 
+                         </div>
+                         <div class="row">   
+                              
+                             <div class="form-group col-md-3">
+                                <label>Breakdown Time From</label>
                                 <input class="form-control" type="time" name="ideal_hrs_from" id="ideal_hrs_from" value="">                                             
                              </div>
-                             <div class="form-group col-md-2">
-                                <label>Ideal Hrs To	</label>
+                             <div class="form-group col-md-3">
+                                <label>Breakdown Time To	</label>
                                 <input class="form-control" type="time" name="ideal_hrs_to" id="ideal_hrs_to" value="">                                             
-                             </div>  
+                             </div> 
+                             <div class="form-group col-md-2">
+                                <label>Breakdown Hrs</label>
+                                <input class="form-control" type="text" name="total_hrs" id="total_hrs" value="" readonly="true">                                             
+                             </div> 
+                              <div class="form-group col-md-4">
+                                <label>Breakdown Reason</label>
+                                <textarea class="form-control" name="breakdown_remarks" id="breakdown_remarks" placeholder="Breakdown Reason"></textarea>                                          
+                             </div> 
                          </div>
                          <div class="row">
                              <div class="form-group col-md-2">

@@ -52,7 +52,7 @@ jQuery(function($) {
                     $('#edit_modal #spillage').val(d.spillage) ;  
                     $('#edit_modal #fe_si_mg').val(d.fe_si_mg) ;  
                     $('#edit_modal #ideal_hrs_from').val(d.ideal_hrs_from) ;  
-                    $('#edit_modal #ideal_hrs_to').val(d.ideal_hrs_to) ;   
+                    $('#edit_modal #ideal_hrs_to').val(d.ideal_hrs_to).change() ;   
                     $('#edit_modal #remarks').val(d.remarks) ;                      
                     $('#edit_modal #pouring_start_time').val(d.pouring_start_time) ;  
                     $('#edit_modal #pouring_finish_time').val(d.pouring_finish_time) ;  
@@ -341,7 +341,51 @@ jQuery(function($) {
          }
             
      }); 
-   	 
+
+
+   	 $(document).ready(function() {
+
+        function calculateBreakdownHours(containerId) {
+          let container = $('#' + containerId);
+
+          let from = container.find('[name="ideal_hrs_from"]').val();
+          let to = container.find('[name="ideal_hrs_to"]').val();
+
+          if (from && to) {
+              let fromParts = from.split(':');
+              let toParts = to.split(':');
+
+              let fromDate = new Date(0, 0, 0, fromParts[0], fromParts[1], fromParts[2] || 0);
+              let toDate = new Date(0, 0, 0, toParts[0], toParts[1], toParts[2] || 0);
+
+              // If crosses midnight
+              if (toDate < fromDate) {
+                  toDate.setDate(toDate.getDate() + 1);
+              }
+
+              let diffMs = toDate - fromDate;
+              let diffHrs = Math.floor(diffMs / 1000 / 60 / 60);
+              let diffMins = Math.floor((diffMs / 1000 / 60) % 60);
+              let diffSecs = Math.floor((diffMs / 1000) % 60);
+
+              let total = 
+                  String(diffHrs).padStart(2, '0') + ":" + 
+                  String(diffMins).padStart(2, '0') + ":" + 
+                  String(diffSecs).padStart(2, '0');
+
+              container.find('[name="total_hrs"]').val(total);
+          }
+      }
+
+        // Trigger on time change
+        $('#add_modal [name="ideal_hrs_from"], #add_modal [name="ideal_hrs_to"]').on('change keyup', function() {
+            calculateBreakdownHours('add_modal');
+        });
+
+        $('#edit_modal [name="ideal_hrs_from"], #edit_modal [name="ideal_hrs_to"]').on('change keyup', function() {
+            calculateBreakdownHours('edit_modal');
+        });
+    });
 
 });
 </script> 
