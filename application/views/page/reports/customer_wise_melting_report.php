@@ -1,7 +1,7 @@
 <?php  include_once(VIEWPATH . '/inc/header.php'); 
-/*echo "<pre>";
-print_r($record_list);
-echo "</pre>";*/
+// echo "<pre>";
+// print_r($record_list);
+// echo "</pre>";
 ?>
  <section class="content-header">
   <h1>Customer Wise Melting Report</h1>
@@ -76,15 +76,26 @@ echo "</pre>";*/
               <h3 class="box-title text-white">Customer Wise Melting Report : <span><i> [ <?php echo $srch_from_date ?> to <?php echo $srch_to_date ?> ]</i></span></h3> 
             </div>
             <div class="box-body bg-gray-light table-responsive">  
-                <?php  if(!empty($record_list)) { $cum['liq'] = $cum['units'] =  $cum['poured_casting_wt'] = 0; ?>
+                <?php  if(!empty($record_list)) { 
+                    $cum['liq'] = $cum['units'] =  $cum['poured_casting_wt'] = 0; 
+                    $total_seconds = 0;
+                    ?>
                     <?php  foreach($record_list as $j => $info) { 
                         $cum['units'] += $info['units'];
 						//if(isset($tot_liq_metal[$info['mid']]))
                           $tot_liq = array_sum($tot_liq_metal[$info['mid']]);  
 
                         $time = $info['ideal_hrs']; // e.g. "02:30:00"
-                        list($h, $m, $s) = explode(':', $time);
-                        $total_seconds += ($h * 3600) + ($m * 60) + $s;
+                        if (!empty($time) && strpos($time, ':') !== false) {
+                            $parts = explode(':', $time);
+
+                            // Fill missing parts safely
+                            $h = isset($parts[0]) ? (int)$parts[0] : 0;
+                            $m = isset($parts[1]) ? (int)$parts[1] : 0;
+                            $s = isset($parts[2]) ? (int)$parts[2] : 0;
+
+                            $total_seconds += ($h * 3600) + ($m * 60) + $s;
+                        }
                         //else {
                         //  $tot_liq = 0;  
                         //  echo "<h1>Chemical Composition Missing </h1>";
@@ -126,10 +137,10 @@ echo "</pre>";*/
                             <div class="col-md-12">
                                 <table class="table table-bordered text-center table-condensed">
                                     <tr>
-                                        <th colspan="3" class="text-center">Furnace</th>
-                                        <th colspan="3" >Pouring</th>
-                                        <th colspan="3">Idle</th>
-                                        <th colspan="4">Electrical</th>
+                                        <th colspan="3" class="text-center bg-light-blue disabled">Furnace</th>
+                                        <th colspan="3" class="bg-navy disabled">Pouring</th>
+                                        <th colspan="3" class="bg-yellow disabled">Idle (Breakdown)</th>
+                                        <th colspan="4" class="bg-olive disabled">Electrical</th>
                                         <!--<th colspan="2">Melt Loss</th>-->
                                     </tr>
                                     <tr>
@@ -141,7 +152,7 @@ echo "</pre>";*/
                                         <th>Tot Hrs</th>
                                         <th>From</th>
                                         <th>To</th>
-                                        <th>Tot Hrs</th> 
+                                        <th class="text-red">Tot Hrs</th> 
                                         <th>Init</th> 
                                         <th>Final</th> 
                                         <th>Units</th> 
@@ -159,7 +170,7 @@ echo "</pre>";*/
                                         <td><?php echo $info['pouring_time']?></td>
                                         <td><?php echo $info['ideal_hrs_from']?></td>
                                         <td><?php echo $info['ideal_hrs_to']?></td>
-                                        <td><?php echo $info['ideal_hrs']?></td>
+                                        <td class="text-red"><?php echo $info['ideal_hrs']?></td>
                                         <td><?php echo $info['start_units']?></td>
                                         <td><?php echo $info['end_units']?></td>
                                         <td><strong class="text-fuchsia"><?php echo $info['units']; ?></strong></td>
@@ -426,7 +437,7 @@ echo "</pre>";*/
                     <div class="col-md-2">P.Casting Wt : <strong><?php echo number_format($cum['poured_casting_wt'],3)?></strong></div>
                     <div class="col-md-2">FR Wt : <strong><?php echo number_format(($cum['liq'] - $cum['poured_casting_wt']),3);?></strong></div>
                     <div class="col-md-2">Units/ton :<strong> <?php echo number_format(( (($cum['units'] / $cum['liq']) * 1000)),3);?></strong></div>
-                    <div class="col-md-2">Total Breakdown Hrs :<strong> <?php echo sprintf("Total Ideal Hours: %02d:%02d:%02d", $total_hours, $total_minutes, $total_seconds); ?></strong></div>
+                    <div class="col-md-2"><strong> <?php echo sprintf("Total Breakdown Hours: %02d:%02d:%02d", $total_hours, $total_minutes, $total_seconds); ?></strong></div>
                 </div>
              </div>
             </div> 

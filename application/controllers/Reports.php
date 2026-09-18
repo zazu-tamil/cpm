@@ -4289,9 +4289,12 @@ class Reports extends CI_Controller {
             TIMEDIFF(a.pouring_finish_time,a.pouring_start_time) as pouring_time,
             (a.end_units - a.start_units) as units, 
             TIMEDIFF(a.ideal_hrs_to,a.ideal_hrs_from ) as ideal_hrs1 , 
-             IF(
+            IF(
                     a.total_hrs = '' OR a.total_hrs IS NULL,
-                    ROUND((TIME_TO_SEC(a.ideal_hrs_to) - TIME_TO_SEC(a.ideal_hrs_from)) / 3600, 2),
+                    TIME_FORMAT(
+                        SEC_TO_TIME(TIME_TO_SEC(a.ideal_hrs_to) - TIME_TO_SEC(a.ideal_hrs_from)),
+                        '%H:%i:%s'
+                    ),
                     a.total_hrs
                 ) AS ideal_hrs,
             f.*
@@ -8176,10 +8179,11 @@ class Reports extends CI_Controller {
             b.produced_qty,
             ifnull(c.rejection_qty,0) as rejection_qty ,
             ifnull(d.despatch_qty,0) as despatch_qty,
-            (b.produced_qty - (ifnull(c.rejection_qty,0) + ifnull(d.despatch_qty,0))) as stock_qty 
+            (b.produced_qty - (ifnull(c.rejection_qty,0) + ifnull(d.despatch_qty,0))) as stock_qty ,
+            c.qc_info
             from work_planning_info as a  
             left join ( select p.work_planning_id , p.melting_heat_log_id, sum(p.produced_qty) as produced_qty from melting_item_info as p where p.`status` = 'Active' group by p.work_planning_id , p.melting_heat_log_id ) as b on b.work_planning_id = a.work_planning_id
-            left join (select q.work_planning_id, q.melting_heat_log_id ,sum(q.rejection_qty) as rejection_qty from qc_inspection_info as q where q.`status` = 'Active' group by q.work_planning_id, q.melting_heat_log_id) as c on c.work_planning_id = a.work_planning_id and c.melting_heat_log_id = b.melting_heat_log_id 
+            left join (select q.work_planning_id, q.melting_heat_log_id ,sum(q.rejection_qty) as rejection_qty , group_concat(q.qc_date,' || Qty: ' ,q.rejection_qty ) as qc_info from qc_inspection_info as q where q.`status` = 'Active' group by q.work_planning_id, q.melting_heat_log_id) as c on c.work_planning_id = a.work_planning_id and c.melting_heat_log_id = b.melting_heat_log_id 
             left join ( select  r.work_planning_id , r.melting_heat_log_id , sum(r.qty) as despatch_qty from heatcode_despatch_info as r where r.`status` = 'Active' and r.melting_heat_log_id > 0 and r.heat_code != '' and r.work_planning_id > 0 group by r.work_planning_id , r.melting_heat_log_id ) as d on d.work_planning_id = a.work_planning_id and d.melting_heat_log_id = b.melting_heat_log_id
             left join melting_heat_log_info as e on e.melting_heat_log_id = b.melting_heat_log_id
             left join pattern_info as f on f.pattern_id = a.pattern_id

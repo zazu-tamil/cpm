@@ -53,6 +53,7 @@
                         <th>Planning Date</th> 
                         <th>Shift</th> 
                         <th>HeadCode</th> 
+                        <th>QC info</th> 
                         <th class="text-right">Produced Qty</th>  
                         <th class="text-right">Rejected Qty</th>  
                         <th class="text-right">Despatch Qty</th>  
@@ -62,11 +63,11 @@
                     <tbody>
                         <?php  foreach($record_list as $cust => $info1) {  ?>
                             <tr>
-                                <th colspan="7" class="text-red">Customer : <?php echo $cust; ?></th>
+                                <th colspan="8" class="text-red">Customer : <?php echo $cust; ?></th>
                             </tr>
                          <?php  foreach($info1 as $item => $info2) {  ?>
                             <tr>
-                                <th colspan="7" class="text-blue">Item : <?php echo $item; ?></th>
+                                <th colspan="8" class="text-blue">Item : <?php echo $item; ?></th>
                             </tr>
                          <?php 
                             $tot_qty = 0; 
@@ -83,6 +84,7 @@
                                 <td><?php echo $info['planning_date']; ?></td>
                                 <td><?php echo $info['shift']; ?></td>
                                 <td><?php echo $info['heat_code']; ?></td>
+                                <td class="text-sm"><?php echo str_replace(',','',$info['qc_info']); ?></td>
                                 <td class="text-right"><?php echo $info['produced_qty']; ?></td>
                                 <td class="text-right"><?php echo $info['rejection_qty']; ?></td>
                                 <td class="text-right"><?php echo $info['despatch_qty']; ?></td>
@@ -90,7 +92,7 @@
                             </tr> 
                         <?php }  ?>
                             <tr>
-                                <th colspan="3" class="text-blue">Total</th>
+                                <th colspan="4" class="text-blue">Total</th>
                                 <th class="text-right"><?php echo $tot_produced_qty; ?></th>
                                 <th class="text-right"><?php echo $tot_rejection_qty; ?></th>
                                 <th class="text-right"><?php echo $tot_despatch_qty; ?></th>
